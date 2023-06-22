@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Matching Buses</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 90%;
+      margin-left:100px;
+      margin-right:0px;
+    }
+    th {
+      border-bottom: solid;
+      background-color:#0bbae6;
+      padding: 8px;
+      text-align: left;
+    }
+    td {
+      padding: 8px;
+      text-align: left;
+      border-bottom:solid;
+    }
+    .bus-image {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+    .button{
+      background-color:orange;
+      width: 70px;
+      height: 50px;
+      cursor: pointer;
+      border-radius: 50%;
+
+    }
+  </style>
+
+</head>
+<body>
+  <h1>Matching Buses</h1>
+  {% if matching_buses %}
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Departure Time</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Seat Available</th>
+        <th>Feature</th>
+        <th>Image</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for bus in matching_buses %}
+      <tr>
+        <td data-url="customerPage/seat.html">{{ bus.name }}</td>
+        <td>{{ bus.departure_time }}</td>
+        <td>{{ bus.category }}</td>
+        <td>Rs.{{ bus.price }}</td>
+        <td>{{ bus.seats_available }}</td>
+        <td>{{ bus.features }}</td>
+        <td><img src="{{ bus.image.url }}" alt="{{ bus.image.name }}" class="bus-image"></td>
+        <td>
+          <a href="{% url 'Bus:seats' pk=bus.pk %}"><button class="button">Book</button></a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No matching buses found.</p>
+  {% endif %}
+</body>
+</html>

@@ -1,0 +1,61 @@
+{% extends 'base_nav.html' %}
+{% load static %}
+
+{% block maincontent %}
+
+<section class="bg-gray-100">
+    <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+        <div class="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
+            <div class="max-w-lg mx-auto bg-white rounded-lg shadow-lg">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 flex justify-center">Welcome To Your Profile</h2>
+                    <div class="flex items-center justify-center">
+                        <div class="rounded-full p-4">
+                            <img src="{% static 'profile.png' %}" alt="Profile Image" style="width: 100px; height: 100px;">
+                        </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <h2 class="text-xl font-semibold text-gray-800">{{ user }}</h2>
+                    </div>
+                    <div class="mt-6">
+                        <div class="text-gray-700">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="font-semibold">First Name:</div>
+                                <div>{{ user.first_name }}</div>
+                                <div class="font-semibold">Last Name:</div>
+                                <div>{{ user.last_name }}</div>
+                                <div class="font-semibold">Contact No.:</div>
+                                <div>{{ user.phone_number }}</div>
+                                <div class="font-semibold">Email:</div>
+                                <div>{{ user.email }}</div>
+                                <div class="hover:underline">
+                                    <a href="{% url 'customerPage:cancel'%}" class="hover:underline">Cancel Ticket</a>
+                                </div>
+                                <div class="hover:underline">
+                                    <a href="{% url 'customerPage:print'%}" style="margin-left: 20px;" class="hover:underline">Print Ticket</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-center mt-4 gap-8">
+                        <button class="inline-block rounded-lg bg-blue-500 px-5 py-3 text-xl font-medium text-white">
+                            <a href="{% url 'customerPage:editProfile'%}" class="hover:underline">Edit Profile</a>
+                        </button>
+                        <button class="inline-block rounded-lg bg-blue-500 px-5 py-3 text-xl font-medium text-white">
+                            <a href="{% url 'customerPage:changePassword'%}" class="hover:underline">Change Password</a>
+                        </button>
+                        <button class="inline-block rounded-lg bg-blue-500 px-5 py-3 text-xl font-medium text-white">
+                            <a href="{% url 'payment:booking_history'%}" class="hover:underline">History</a>
+                        </button>
+                    </div>
+                    <div class="flex justify-center mt-4">
+                        <button class="inline-block rounded-lg bg-blue-500 px-5 py-3 text-xl font-bold text-white">
+                            <a href="{% url 'customerPage:logout'%}" class="hover:underline">Log Out</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock maincontent %}

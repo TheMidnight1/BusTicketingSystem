@@ -1,0 +1,62 @@
+{% load static %}
+<div class="flex h-screen flex-col justify-between border-e bg-white">
+  <div class="px-4 py-6">
+    <a href="/adminpage"
+      class="grid h-10 w-32 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600"
+    >
+    <img
+    class="h-8"
+    viewBox="0 0 118 24"
+    fill="none"
+    src="{% static 'logo.png' %}"
+  >
+    </a>
+
+    <ul class="mt-6 space-y-1">
+      <li>
+        <a
+          href="/adminpage"
+          class="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
+        >
+          General
+        </a>
+      </li>
+      <li>
+        <a
+          href="{% url 'adminPage:createbus' %}"
+          class="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
+        >
+          Create a bus
+        </a>
+      </li>
+      <li>
+        <a
+          href="{% url 'adminPage:seatBook' %}"
+          class="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
+        >
+          Book seats
+        </a>
+      </li>
+
+
+    </ul>
+  </div>
+
+  <div class="sticky inset-x-0 bottom-0 border-t border-gray-100">
+    <a href="#" class="flex items-center gap-2 bg-white p-4 hover:bg-gray-50">
+      <img
+        alt="Man"
+        src="{% static 'pp.jpg' %}"
+        class="h-10 w-10 rounded-full object-cover"
+      />
+
+      <div>
+        <p class="text-xs">
+          <strong class="block font-medium">Sudarshan Bhandari</strong>
+
+          <span> Sudarshan@gmail.com</span>
+        </p>
+      </div>
+    </a>
+  </div>
+</div>

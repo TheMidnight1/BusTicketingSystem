@@ -1,0 +1,33 @@
+{% extends 'base_nav.html' %}
+
+{% block maincontent %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="flex justify-center text-2xl font-bold mb-4">Booking History</h1>
+    <div class="max-w-screen-xl mx-auto">
+        <table class="w-full border rounded">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="px-6 py-3 border-b">User</th>
+                    <th class="px-6 py-3 border-b">Bus Name</th>
+                    <th class="px-6 py-3 border-b">Bus Number</th>
+                    <th class="px-6 py-3 border-b">Selected Seats</th>
+                    <th class="px-6 py-3 border-b">Amount</th>
+                    <th class="px-6 py-3 border-b">Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for payment in payments %}
+                <tr>
+                    <td class="px-6 py-4 border-b">{{ payment.user }}</td>
+                    <td class="px-6 py-4 border-b">{{ payment.bus_name }}</td>
+                    <td class="px-6 py-4 border-b">{{ payment.bus_number }}</td>
+                    <td class="px-6 py-4 border-b">{{ payment.selected_seats }}</td>
+                    <td class="px-6 py-4 border-b">{{ payment.amount }}</td>
+                    <td class="px-6 py-4 border-b">{{ payment.timestamp }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock maincontent %}

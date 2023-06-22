@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="flex">
+    <div class="w-1/4">
+      {% include 'sidebar.html' %}
+    </div>
+    <div class="w-3/4 ml-10">
+      {% block maincontent %}{% endblock maincontent %}
+    </div>
+  </div>
+{% endblock content %}
+

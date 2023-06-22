@@ -1,0 +1,96 @@
+{% extends 'base_nav.html' %} {% block maincontent %}
+<div class="flex flex-col items-center">
+  <h2 class="text-2xl font-bold mb-4">Bus Details</h2>
+  <img src="{{ bus.image.url }}" alt="{{ bus.name }}" class="bus-image w-48 h-48 object-cover mb-2" />
+  <p class="text-lg">Bus Name: {{ bus.name }}</p>
+  <p class="text-lg">Bus Number: {{ bus.bus_number }}</p>
+</div>
+
+<div class="mt-4 flex flex-col items-center">
+  <h2 class="text-2xl font-bold mb-2">Selected Seats</h2>
+  <ul class="list-disc list-inside">
+    {% for seat in selected_seats %}
+    <li class="text-lg">{{ seat }}</li>
+    {% endfor %}
+  </ul>
+</div>
+<div class="mt-4 flex flex-col items-center">
+  <h2 class="text-2xl font-bold mb-2">Price</h2>
+  <p class="text-lg">Total Amount: {{ total_amount }}</p>
+</div>
+
+
+<div class="mt-4 ">
+  <h2 class="text-2xl font-bold mb-2">Payment</h2>
+  <div id="card-element" class="border border-gray-300 rounded p-4"></div>
+</div>
+
+<form
+  id="payment-form"
+  action="{% url 'payment:payment_success' %}"
+  method="POST"
+  class="mt-8"
+>
+  {% csrf_token %}
+  <input type="hidden" name="bus_id" value="{{ bus.id }}" />
+  <input type="hidden" name="user" value="{{ request.user.username }}" />
+  <input type="hidden" name="bus_name" value="{{ bus.name }}" />
+  <input type="hidden" name="bus_number" value="{{ bus.bus_number }}" />
+  <input type="hidden" name="selected_seats" value="{{ selected_seats }}" />
+  <input type="hidden" name="amount" value="{{ total_amount }}" />
+
+  <button id="submit-button" type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 flex justify-center mx-auto">
+    Make Payment
+  </button>
+</form>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var stripe = Stripe("{{ stripe_public_key }}");
+    var elements = stripe.elements();
+    var cardElement = elements.create("card");
+
+    cardElement.mount("#card-element");
+
+    var form = document.getElementById("payment-form");
+    var submitButton = document.getElementById("submit-button");
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      submitButton.disabled = true;
+
+      stripe.createToken(cardElement).then(function (result) {
+        if (result.error) {
+          // Display error message to the user
+        } else {
+          var token = result.token;
+          var cardId = result.token.card.id;
+          var csrfToken = document.getElementsByName("csrfmiddlewaretoken")[0]
+            .value;
+
+          var hiddenInput = document.createElement("input");
+          hiddenInput.setAttribute("type", "hidden");
+          hiddenInput.setAttribute("name", "stripe_token");
+          hiddenInput.setAttribute("value", token.id);
+          form.appendChild(hiddenInput);
+
+          var cardIdInput = document.createElement("input");
+          cardIdInput.setAttribute("type", "hidden");
+          cardIdInput.setAttribute("name", "stripe_card_id");
+          cardIdInput.setAttribute("value", cardId);
+          form.appendChild(cardIdInput);
+
+          var csrfInput = document.createElement("input");
+          csrfInput.setAttribute("type", "hidden");
+          csrfInput.setAttribute("name", "csrfmiddlewaretoken");
+          csrfInput.setAttribute("value", csrfToken);
+          form.appendChild(csrfInput);
+
+          form.submit();
+        }
+      });
+    });
+  });
+</script>
+{% endblock maincontent %}

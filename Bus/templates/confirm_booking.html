@@ -1,0 +1,11 @@
+{% extends 'base_nav.html' %}
+
+{% block maincontent %}
+  <h1>Booking Confirmed</h1>
+  <p>Selected seats:</p>
+  <ul>
+    {% for seat in selected_seats %}
+      <li>{{ seat }}</li>
+    {% endfor %}
+  </ul>
+{% endblock maincontent %}

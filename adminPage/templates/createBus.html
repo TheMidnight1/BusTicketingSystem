@@ -1,0 +1,24 @@
+{% extends 'base_side.html' %}
+{% block maincontent %}
+  <h1 class="text-2xl font-bold mb-4">Create Bus</h1>
+  <form method="POST" enctype="multipart/form-data" class="max-w-xl mx-auto bg-white p-6 rounded shadow-md">
+    {% csrf_token %}
+    
+    {% for field in form %}
+    <div class="mb-4">
+      <label for="{{ field.id_for_label }}" class="block text-gray-700 font-bold mb-2">{{ field.label }}:</label>
+      {{ field }}
+      {% if field.errors %}
+      <div class="text-red-500">
+        {% for error in field.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+    
+    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 justify-center">Create</button>
+  </form>
+{% endblock maincontent %}
+ 

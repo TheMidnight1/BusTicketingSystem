@@ -1,0 +1,129 @@
+{% extends 'base_side.html' %}
+
+{% block maincontent %}
+  <form action="{% url 'adminPage:bookSeat' pk=bus.pk%}" method="POST">
+    {% csrf_token %}
+    <div class="logo flex justify-center "><div style="font-size: 50px;">&#9991;</div></div>
+  <div class="flex justify-center gap-8">
+    <div class="flex gap-2">
+        <div class="flex flex-col">
+          {% for seat in seats %}
+            {% if seat|slugify in booked_seats %}
+            <div class="seat selected">
+              <input id="seat-{{ seat }}" type="checkbox" name="seats_selected" value="{{ seat }}" class="hidden"  disabled />
+              <label for="seat-{{ seat }}" class="cursor-pointer ">{{ seat }}</label>
+            </div>
+            {% else %}
+            <div class="seat">
+              <input id="seat-{{ seat }}" type="checkbox" name="seats_selected" value="{{ seat }}" class="hidden" onclick="toggleSeat(this)" />
+              <label for="seat-{{ seat }}" class="cursor-pointer">{{ seat }}</label>
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      
+        <div class="flex flex-col">
+          {% for seat in seats %}
+            {% if seat|add:8|slugify in booked_seats %}
+            <div class="seat selected">
+              <input id="seat-{{ seat|add:8 }}" type="checkbox" name="seats_selected" value="{{ seat|add:8 }}" class="hidden"  disabled />
+              <label for="seat-{{ seat|add:8 }}" class="cursor-pointer selected">{{ seat|add:8 }}</label>
+            </div>
+            {% else %}
+            <div class="seat">
+              <input id="seat-{{ seat|add:8 }}" type="checkbox" name="seats_selected" value="{{ seat|add:8 }}" class="hidden" onclick="toggleSeat(this)" />
+              <label for="seat-{{ seat|add:8 }}" class="cursor-pointer">{{ seat|add:8 }}</label>
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      
+      <div class="flex gap-2">
+        <div class="flex flex-col">
+          {% for seat in seats %}
+            {% if seat|add:16|slugify in booked_seats %}
+            <div class="seat selected">
+              <input id="seat-{{ seat|add:16 }}" type="checkbox" name="seats_selected" value="{{ seat|add:16  }}" class="hidden"  disabled />
+              <label for="seat-{{ seat|add:16 }}" class="cursor-pointer ">{{ seat|add:16 }}</label>
+            </div>
+            {% else %}
+            <div class="seat">
+              <input id="seat-{{ seat|add:16  }}" type="checkbox" name="seats_selected" value="{{ seat|add:16 }}" class="hidden" onclick="toggleSeat(this)" />
+              <label for="seat-{{ seat|add:16  }}" class="cursor-pointer">{{ seat|add:16 }}</label>
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      
+        <div class="flex flex-col">
+          {% for seat in seats %}
+            {% if seat|add:24|slugify in booked_seats %}
+            <div class="seat selected">
+              <input id="seat-{{ seat|add:24 }}" type="checkbox" name="seats_selected" value="{{ seat|add:24 }}" class="hidden"  disabled />
+              <label for="seat-{{ seat|add:24 }}" class="cursor-pointer selected">{{ seat|add:24 }}</label>
+            </div>
+            {% else %}
+            <div class="seat">
+              <input id="seat-{{ seat|add:24 }}" type="checkbox" name="seats_selected" value="{{ seat|add:24 }}" class="hidden" onclick="toggleSeat(this)" />
+              <label for="seat-{{ seat|add:24 }}" class="cursor-pointer">{{ seat|add:24 }}</label>
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  
+    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 justify-center">Book Selected Seats</button>
+  </form>
+
+
+
+  <style>
+    .logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 7rem;
+    }
+    .seat {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      width: 40px;
+      background-color: #f0f0f0;
+      border: 2px solid #333;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+  
+    .seat.selected {
+      background-color: #797d7a;
+      border: 2px solid #333;
+    }
+    .seat.selectedNow{
+      background-color: #0bbae6;
+      border: 2px solid #333;
+      
+    }
+    
+  
+    .hidden {
+      display: none;
+    }
+  </style>
+  
+  <script>
+    function toggleSeat(seat) {
+      var seatLabel = seat.nextElementSibling;
+      if (seat.checked) {
+        seatLabel.parentNode.classList.add('selectedNow');
+      } else {
+        seatLabel.parentNode.classList.remove('selectedNow');
+      }
+    }
+  </script>
+{% endblock %}

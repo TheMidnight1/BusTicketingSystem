@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {% block content %}
+<h2>Booked Seats</h2>
+
+{% if payments %}
+<table>
+  <thead>
+    <tr>
+      <th>Payment ID</th>
+      <th>User</th>
+      <th>Bus Name</th>
+      <th>Bus Number</th>
+      <th>Selected Seats</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for payment in payments %}
+    <tr>
+      <td>{{ payment.pk }}</td>
+      <td>{{ payment.user }}</td>
+      <td>{{ payment.bus_name }}</td>
+      <td>{{ payment.bus_number }}</td>
+      <td>{{ payment.selected_seats }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No booked seats found.</p>
+{% endif %} {% endblock %}

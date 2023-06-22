@@ -1,0 +1,213 @@
+{% extends 'base_side.html' %}
+
+{% block maincontent %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bus Seat Booking</title>
+  <style>
+    .logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 6rem;
+      margin-top: 6rem;
+    }
+
+    .bus-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 1px; /* Adjust the value to increase/decrease the gap between columns */
+      margin-right: 4rem;
+    }
+
+    .row {
+      display: flex;
+      gap: 2px; /* Adjust the value to increase/decrease the gap between seats */
+    }
+
+    .seat {
+      width: 40px;
+      height: 40px;
+      background-color: #f0f0f0;
+      border: 2px solid #333;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .seat.selected {
+      background-color: #0bbae6;
+      border: 2px solid #333;
+    }
+
+    .seat.booked {
+      background-color: #FF0000;
+      border: 2px solid #999999;
+      cursor: not-allowed;
+    }
+  </style>
+
+  <script>
+    var selectedSeats = [];
+
+    function toggleSeat(seat) {
+      if (seat.classList.contains('booked')) {
+        return;
+      }
+    
+      if (seat.classList.contains('selected')) {
+        // Deselect the seat
+        seat.classList.remove('selected');
+        var seatNumber = seat.innerHTML;
+        var index = selectedSeats.indexOf(seatNumber);
+        if (index !== -1) {
+          selectedSeats.splice(index, 1);
+        }
+      } else {
+        // Select the seat
+        seat.classList.add('selected');
+        var seatNumber = seat.innerHTML;
+        selectedSeats.push(seatNumber);
+      }
+      updateSelectedSeatsDisplay();
+      updateBookButton();
+    }
+    
+
+    function updateSelectedSeatsDisplay() {
+      var selectedSeatsParagraph = document.getElementById('selectedSeats');
+      selectedSeatsParagraph.innerText = selectedSeats.join(', ');
+      var selectedSeatsInput = document.getElementById('selectedSeatsInput');
+      selectedSeatsInput.value = selectedSeats.join(',');
+    }
+
+    function updateBookButton() {
+      var bookButton = document.getElementById('bookButton');
+      var selectedSeatsContainer = document.getElementById('selectedSeatsContainer');
+      if (selectedSeats.length > 0) {
+        bookButton.style.display = 'block';
+        selectedSeatsContainer.style.display = 'block';
+      } else {
+        bookButton.style.display = 'none';
+        selectedSeatsContainer.style.display = 'none';
+      }
+    }
+
+  </script>
+
+</head>
+<body>
+  <h1 class="mt-5 text-2xl font-extrabold">Bus Seat Booking for</h1>
+  <div>
+    <h1>Bus Name: {{bus.name}}</h1>
+    <span>Bus number: {{bus.bus_number}}</span>
+  </div>
+
+  
+  <div class="logo mt-5"><span style="font-size: 50px;">&#9991;</span></div>
+
+
+
+
+
+<div class="bus-container">
+  <div class="column">
+    <div class="row">
+      <div class="seat" onclick="toggleSeat(this)" >1</div>
+      <div class="seat" onclick="toggleSeat(this)">2</div>
+    </div>
+     
+<div class="row">
+    <div class="seat" onclick="toggleSeat(this)">3</div>
+    <div class="seat" onclick="toggleSeat(this)">4</div>
+  </div>
+  <div class="row">
+    <div class="seat" onclick="toggleSeat(this)">5</div>
+    <div class="seat" onclick="toggleSeat(this)">6</div>
+  </div>
+  <div class="row">
+    <div class="seat" onclick="toggleSeat(this)">7</div>
+    <div class="seat" onclick="toggleSeat(this)">8</div>
+  </div>
+  <div class="row">
+    <div class="seat" onclick="toggleSeat(this)">9</div>
+    <div class="seat" onclick="toggleSeat(this)">10</div>
+  </div>
+  <div class="row">
+    <div class="seat" onclick="toggleSeat(this)">11</div>
+    <div class="seat" onclick="toggleSeat(this)">12</div>
+  </div>
+  <div class="row">
+    <div class="seat" onclick="toggleSeat(this)">13</div>
+    <div class="seat" onclick="toggleSeat(this)">14</div>
+  </div>
+  <div class="row">
+    <div class="seat" onclick="toggleSeat(this)">15</div>
+    <div class="seat" onclick="toggleSeat(this)">16</div>
+  </div>
+  
+</div>
+<div class="column">
+  <div class="row">
+    <div class="seat" onclick="toggleSeat(this)">17</div>
+    <div class="seat" onclick="toggleSeat(this)">18</div>
+  </div>
+  <div class="row">
+    <div class="seat" onclick="toggleSeat(this)">19</div>
+    <div class="seat" onclick="toggleSeat(this)">20</div>
+  </div>
+  <div class="row">
+    <div class="seat" onclick="toggleSeat(this)">21</div>
+    <div class="seat" onclick="toggleSeat(this)">22</div>
+  </div>
+  <div class="row">
+    <div class="seat" onclick="toggleSeat(this)">23</div>
+    <div class="seat" onclick="toggleSeat(this)">24</div>
+  </div>
+  <div class="row">
+    <div class="seat" onclick="toggleSeat(this)">25</div>
+    <div class="seat" onclick="toggleSeat(this)">26</div>
+  </div>
+  <div class="row">
+    <div class="seat" onclick="toggleSeat(this)">27</div>
+    <div class="seat" onclick="toggleSeat(this)">28</div>
+  </div>
+  <div class="row">
+    <div class="seat" onclick="toggleSeat(this)">29</div>
+    <div class="seat" onclick="toggleSeat(this)">30</div>
+  </div>
+  <div class="row">
+    <div class="seat" onclick="toggleSeat(this)">31</div>
+    <div class="seat" onclick="toggleSeat(this)">32</div>
+  </div>
+</div>
+  </div>
+
+  <div id="selectedSeatsContainer">
+    <h2>Selected Seats:</h2>
+    <p id="selectedSeats"></p>
+  </div>
+  
+  <form method="post">
+    {% csrf_token %}
+    <input type="hidden" id="selectedSeatsInput" name="selected_seats" value="{{ selectedSeats }}" />
+    <button id="bookButton" type="submit" class="bg-blue-500 hover:bg-blue-600 text-white rounded-lg px-4 py-2 mt-4 text-sm font-medium">Book</button>
+  </form>
+</body>
+</html>
+{% endblock maincontent %}
+
+

@@ -1,0 +1,57 @@
+{% extends 'base_nav.html'%}
+
+{% block maincontent %}
+<div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-lg text-center">
+      <h1 class="text-2xl font-bold sm:text-3xl">Print Your Ticket!</h1>
+  
+      <p class="mt-4 text-gray-500">
+        Print your ticket to travel in bus. Either you can show pdf in mobile or show printed ticket to travel.
+      </p>
+    </div>
+  
+    <form action="" class="mx-auto mb-0 mt-8 max-w-md space-y-4">
+        
+      <div>
+            <label for="email" class="sr-only">Email</label>
+    
+            <div class="relative">
+            <input
+                type="email"
+                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                placeholder="Enter email"
+            />
+            </div>
+      </div>
+
+      <div>
+            <label for="phone_number" class="sr-only">Phone Number</label>
+    
+            <div class="relative">
+            <input
+                type="text"
+                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                placeholder="Enter Your Phone Number"
+            />
+            </div>
+      </div>
+      <div>
+        <label for="ticket_no" class="sr-only">Ticket Number</label>
+
+        <div class="relative">
+        <input
+            type="text"
+            class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+            placeholder="Enter Your Ticket Number"
+        />
+        </div>
+  </div>
+        <button
+          type="submit"
+          class="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
+        >
+          Print Ticket
+        </button>
+    </form>
+</div>
+{% endblock maincontent %}

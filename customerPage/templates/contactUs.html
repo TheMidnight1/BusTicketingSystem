@@ -1,0 +1,50 @@
+{% extends 'base_nav.html' %}
+
+{% block maincontent %}
+<section>
+    <div class="mx-auto max-w-screen-2xl px-4 py-16 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:h-screen lg:grid-cols-2 gap-x-4">
+            <div class="relative z-10 lg:py-16 mx-auto lg:mr-auto">
+                <div class="relative h-64 sm:h-80 lg:h-full">
+                    <div class="recent-location">
+                        <div class="map-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3533.9472862302917!2d85.3285921154214!3d27.71936993241603!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb182a6f0c62d3%3A0x4f3e64b394d4332!2sKathmandu%2044600%2C%20Nepal!5e0!3m2!1sen!2sus!4v1623254122987!5m2!1sen!2sus"
+                                width="650" height="750" style="border:0;"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative flex items-center justify-center bg-gray-100 mx-auto lg:ml-auto">
+                <span class="hidden lg:absolute lg:inset-y-0 lg:-start-16 lg:block lg:w-16 lg:bg-gray-100"></span>
+
+                <div class="justify-center p-8 sm:p-16 lg:p-24 text-center">
+                    <h2 class="text-5xl font-bold sm:text-5xl">
+                        Contact Us
+                    </h2>
+
+                    <p class="mt-6 text-gray-600">
+                        Feel free to contact us if you have any queries about our system. You can send us your email ID and contact details, or message us on Facebook.
+                    </p>
+
+                    <form action="" class="mx-auto mb-0 mt-8 max-w-md space-y-4">
+                        <div class="relative">
+                            <input type="email" class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                placeholder="Enter Your email" />
+                        </div>
+                        <div class="relative">
+                            <input type="text" class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                placeholder="Enter Your Phone Number" />
+                        </div>
+                        <button type="submit"
+                            class="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white">Contact
+                            Us</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock maincontent %}
