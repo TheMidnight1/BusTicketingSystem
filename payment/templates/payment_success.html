@@ -1,10 +1,12 @@
 {% extends 'base_nav.html' %} {% block maincontent %}
 <h2>Bus Details</h2>
-<p>Bus Name: {{ bus.name }}</p>
-<p>Bus Number: {{ bus.bus_number }}</p>
+{% comment %} {% for bus_detail in bus_details %} {% endcomment %}
+<p>Bus Name: {{ bus_details.bus_name }}</p>
+<p>Bus Number: {{ bus_details.bus_number }}</p>
+{% comment %} {% endfor %} {% endcomment %}
+
 <p>Ticket Number: {{ ticket_numbers }}</p>
 <!-- Add other necessary bus details -->
-
 <button
   class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 flex justify-center mx-auto"
 >

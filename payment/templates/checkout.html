@@ -1,7 +1,11 @@
 {% extends 'base_nav.html' %} {% block maincontent %}
 <div class="flex flex-col items-center">
   <h2 class="text-2xl font-bold mb-4">Bus Details</h2>
-  <img src="{{ bus.image.url }}" alt="{{ bus.name }}" class="bus-image w-48 h-48 object-cover mb-2" />
+  <img
+    src="{{ bus.image.url }}"
+    alt="{{ bus.name }}"
+    class="bus-image w-48 h-48 object-cover mb-2"
+  />
   <p class="text-lg">Bus Name: {{ bus.name }}</p>
   <p class="text-lg">Bus Number: {{ bus.bus_number }}</p>
 </div>
@@ -19,8 +23,7 @@
   <p class="text-lg">Total Amount: {{ total_amount }}</p>
 </div>
 
-
-<div class="mt-4 ">
+<div class="mt-4">
   <h2 class="text-2xl font-bold mb-2">Payment</h2>
   <div id="card-element" class="border border-gray-300 rounded p-4"></div>
 </div>
@@ -39,10 +42,32 @@
   <input type="hidden" name="selected_seats" value="{{ selected_seats }}" />
   <input type="hidden" name="amount" value="{{ total_amount }}" />
 
-  <button id="submit-button" type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 flex justify-center mx-auto">
+  <button
+    id="submit-button"
+    type="submit"
+    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 flex justify-center mx-auto"
+  >
     Make Payment
   </button>
 </form>
+{% comment %} For cancel {% endcomment %} {% comment %}
+<form action="{% url 'payment:payment_cancel' %}" method="POST" class="mt-8">
+  {% csrf_token %}
+  <input type="hidden" name="bus_id" value="{{ bus.id }}" />
+  <input type="hidden" name="user" value="{{ request.user.username }}" />
+  <input type="hidden" name="bus_name" value="{{ bus.name }}" />
+  <input type="hidden" name="bus_number" value="{{ bus.bus_number }}" />
+  <input type="hidden" name="selected_seats" value="{{ selected_seats }}" />
+  <input type="hidden" name="amount" value="{{ total_amount }}" />
+
+  <button
+    type="submit"
+    class="px-4 py-2 bg-red-500 text-black rounded hover:bg-red-600 flex justify-center mx-auto"
+  >
+    cancel
+  </button>
+</form>
+{% endcomment %}
 
 <script src="https://js.stripe.com/v3/"></script>
 <script>

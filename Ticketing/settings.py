@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,7 +45,7 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',
     'django_browser_reload',
-    'payment'
+    'payment',
     
     
 
@@ -83,7 +84,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Ticketing.wsgi.application'
-
+ASGI_APPLICATION = "Ticketing.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -104,6 +105,13 @@ DATABASES = {
 #         "PORT": 5432
 #     }
 # }
+
+# channels config
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': "channels.layers.InMemoryChannelLayer"
+    }
+}
 
 
 # Password validation
@@ -172,4 +180,3 @@ STRIPE_PUBLIC_KEY = 'pk_test_51NIRuFKNowOfcrElztFcMIXONCRw1YwaMFt3yzF4idjotPOhev
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-

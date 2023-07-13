@@ -17,9 +17,6 @@ from Bus.models import Ticket, Seat
 
 
 
-
-
-
 # Create your views here.
 
 

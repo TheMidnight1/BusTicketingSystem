@@ -10,22 +10,10 @@ from django.views.generic import ListView
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
 from reportlab.lib.pagesizes import A4
+from Bus.pusher import pusher_client
 
 
 
-
-# # Create your views here.
-def checkout(request, pk):
-    bus = get_object_or_404(Bus, pk=pk)
-    if request.method == 'POST':
-        selected_seats = request.POST.getlist('seats_selected')
-               
-    
-    context = {
-        'bus': bus,
-        'selected_seats': selected_seats,
-    }
-    return render(request, 'checkout.html', context)
 
 from .models import Payment
 
@@ -34,6 +22,9 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 def checkout(request, pk):
     bus = get_object_or_404(Bus, pk=pk)
     selected_seats = request.POST.getlist('seats_selected')
+    pusher_client.trigger("bus-channel",'seats-updated',{'bus_id':bus.pk,'seats':selected_seats,"action":"lock"})
+    
+    
     total_amount = len(selected_seats) * bus.price
 
     if request.method == 'POST':
@@ -66,6 +57,7 @@ def payment_success(request):
         bus_number = request.POST.get('bus_number')
         selected_seats = request.POST.getlist('selected_seats')
 
+        bus_details = {'bus_name':bus_name , 'bus_number':bus_number}
         seat_numbers = []
         for seat in selected_seats:
             seat_numbers.extend(eval(seat))
@@ -119,6 +111,7 @@ def payment_success(request):
         return render(request, 'payment_success.html', {
             'ticket_numbers': ticket_numbers,
             'download_url': download_url,
+            'bus_details':bus_details
         })
 
 

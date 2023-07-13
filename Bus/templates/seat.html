@@ -5,7 +5,7 @@
     {% csrf_token %}
   
     <div class="logo flex justify-center "><div style="font-size: 50px;">&#9991;</div></div>
-  <div class="flex justify-center gap-8">
+  <div class="flex  items-center justify-center gap-8">
     <div class="flex gap-2">
         <div class="flex flex-col">
           {% for seat in seats %}
@@ -74,9 +74,10 @@
         </div>
       </div>
     </div>
-
+    <div class="w-full text-center">
+      <button type="submit" class="px-4 py-2  bg-blue-500 text-white rounded hover:bg-blue-600 justify-center mx-auto">Book Selected Seats</button>
+    </div>
   </div>
-  <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 justify-center">Book Selected Seats</button>
   </form>
 
 

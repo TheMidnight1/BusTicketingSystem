@@ -17,6 +17,8 @@ urlpatterns = [
     path('edit/', views.EditProfileView.as_view(), name='editProfile'),
     path('editpassword/', views.ChangePasswordView.as_view(), name='changePassword'),
     path('contact/', views.Contact, name='contact'),
+    
+    
    
     
     

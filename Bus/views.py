@@ -1,13 +1,33 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,HttpResponse
+from django.http.response import StreamingHttpResponse
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 from .models import Booking
+# from sse import Publisher
 
 from .forms import SearchForm
 from .models import Bus,Seat
 from django.db.models import Q
 
 from datetime import datetime
+import time
+from .pusher import pusher_client
+from .redis import r
 
-
+# def get_selected_seats(bus):
+#     # From database
+#     all_seats = Seat.objects.filter(bus=bus)
+#     seat_numbers = list(map(lambda seat: seat.number, all_seats))
+    
+#     # From redis (LOCKING SYSTEM)
+#     data = r.get(f'bus_{bus.pk}')
+#     if data is not None:
+#         locked_seats
+        
+        
+    
+    
+    
 def search_view(request):
     if request.method == 'GET':
         form = SearchForm(request.GET)
@@ -53,7 +73,6 @@ def seats(request,pk):
     seat_numbers = list(map(lambda seat: seat.number, all_seats))
     if request.method == 'POST':
         selected_seats = request.POST.getlist('seats_selected')
-        
 
         
         # Iterate over the selected seats
@@ -81,6 +100,10 @@ def confirm_booking(request):
 
     return render(request, 'confirm_booking.html', {'selected_seats': selected_seats})
 
+def cancel_booking(request):
+    selected_seats = request.POST.getlist('selected_seats[]')
+
+    return render(request, 'confirm_booking.html', {'selected_seats': selected_seats})
 
 
 

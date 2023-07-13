@@ -1,18 +1,63 @@
 {% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
-	<head>
+  <head>
     <title>BusTicketing</title>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		{% tailwind_css %}
-	</head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    {% tailwind_css %}
+  </head>
 
-	<body class="bg-gray-50 font-serif leading-normal tracking-normal">
-		
-		{%block content%}
-		
-		{% endblock %}
-	</body>
+  <body class="bg-gray-50 font-serif leading-normal tracking-normal">
+    {%block content%} {% endblock %}
+  </body>
+  {% comment %}
+  <script>
+    (() => {
+      let eventSource;
+      window.addEventListener("load", () => {
+        eventSource = new EventSource(`${location.origin}/events`);
+        eventSource.addEventListener("open", () => {
+          console.log("connected");
+        });
+        eventSource.addEventListener("message", (ev) => {
+          console.log("data:", ev);
+        });
+
+        eventSource.addEventListener("error", (ev) => {
+          console.log("error:", ev);
+        });
+      });
+
+      window.addEventListener("unload", () => {
+        eventSource?.close();
+      });
+    })();
+  </script>
+  {% endcomment %}
+  <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+  <script>
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+    (() => {
+      window.pusher = new Pusher("cd96c71bc589687137b6", {
+        cluster: "ap2",
+      });
+
+      const channel = pusher.subscribe("bus-channel");
+      channel.bind("seats-updated", function (data) {
+        if (location.pathname === `/seats/${data.bus_id}`) {
+          data?.seats?.forEach((seat) => {
+            const shouldLock = data?.action === "lock";
+            const el = document.getElementById(`seat-${seat}`);
+            if (el) {
+              el.disabled = shouldLock;
+              el.parentElement.classList.toggle("selected", shouldLock);
+            }
+          });
+        }
+      });
+    })();
+  </script>
 </html>
