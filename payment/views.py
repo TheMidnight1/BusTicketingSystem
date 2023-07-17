@@ -1,4 +1,5 @@
 import stripe
+import json
 from .models import Payment
 from django.urls import reverse
 from django.conf import settings
@@ -11,6 +12,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
 from reportlab.lib.pagesizes import A4
 from Bus.pusher import pusher_client
+from django.contrib.auth.decorators import login_required
+
+from Bus.redis import r
+
 
 
 
@@ -19,15 +24,20 @@ from .models import Payment
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
+@login_required
 def checkout(request, pk):
     bus = get_object_or_404(Bus, pk=pk)
     selected_seats = request.POST.getlist('seats_selected')
     pusher_client.trigger("bus-channel",'seats-updated',{'bus_id':bus.pk,'seats':selected_seats,"action":"lock"})
     
-    
+    print(selected_seats)
     total_amount = len(selected_seats) * bus.price
 
     if request.method == 'POST':
+        user_id = request.user.id
+        # set a locker in redis cache
+        key = f"bus:{pk}:{user_id}"
+        r.setex(key,180,json.dumps(selected_seats))
         try:
             intent = stripe.PaymentIntent.create(
                 amount=int(total_amount * 100),  # Stripe requires the amount in cents

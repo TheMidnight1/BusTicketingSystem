@@ -50,15 +50,12 @@
     Make Payment
   </button>
 </form>
-{% comment %} For cancel {% endcomment %} {% comment %}
-<form action="{% url 'payment:payment_cancel' %}" method="POST" class="mt-8">
+
+<form action="{% url 'Bus:cancel_booking' %}" method="POST" class="mt-8">
   {% csrf_token %}
+
   <input type="hidden" name="bus_id" value="{{ bus.id }}" />
-  <input type="hidden" name="user" value="{{ request.user.username }}" />
-  <input type="hidden" name="bus_name" value="{{ bus.name }}" />
-  <input type="hidden" name="bus_number" value="{{ bus.bus_number }}" />
   <input type="hidden" name="selected_seats" value="{{ selected_seats }}" />
-  <input type="hidden" name="amount" value="{{ total_amount }}" />
 
   <button
     type="submit"
@@ -67,7 +64,6 @@
     cancel
   </button>
 </form>
-{% endcomment %}
 
 <script src="https://js.stripe.com/v3/"></script>
 <script>

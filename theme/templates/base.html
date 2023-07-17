@@ -47,6 +47,7 @@
 
       const channel = pusher.subscribe("bus-channel");
       channel.bind("seats-updated", function (data) {
+        console.log(data);
         if (location.pathname === `/seats/${data.bus_id}`) {
           data?.seats?.forEach((seat) => {
             const shouldLock = data?.action === "lock";
